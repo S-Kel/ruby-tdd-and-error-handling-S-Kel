@@ -18,16 +18,17 @@ puts "--------------------"
 puts "--- Division App ---"
 puts "--------------------"
 begin
-    puts "Give me a number"
+    print "Give me a number: "
     number1 = gets.chomp.to_i
-    puts "Give me another number"
+    print "Give me another number: "
     number2 = gets.chomp.to_i
     answer = divide(number1,number2)
-    print "#{number1} divided by #{number2} = "
+    print "#{number1}  ÷  #{number2} = "
     print "#{answer || "error"}"
     puts
-rescue
-    puts "Error occured"
+rescue  => exception
+    puts "- A #{exception.message} error has occurred.\n- Please enter a numerical number to proceed."
+    retry
 end
 #
 # Code along challenge: if they hit an error, take them back to "give me a number"
