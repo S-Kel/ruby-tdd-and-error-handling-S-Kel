@@ -3,6 +3,7 @@
 # Ruby will rightfully freak out and crash with a ZeroDivisionError
 # Let's bring in some error handling to display a nice message.
 #
+require '~/Projects/ruby/wcolorize'
 
 class String
     def is_i?
@@ -21,7 +22,7 @@ def counter_is_zero?(counts)
     return counts == 0 ? true : false
 end
 def print_message(counts)
-    puts "You have #{counts} attempts remaining >"
+    puts ":> You have #{colorize(" #{counts} ", $font_colors[:yellow], $bg_colors[:red])} attempts remaining..."
 end
 
 def divide (dividend,divisor)
@@ -33,25 +34,25 @@ puts "--- Division App ---"
 puts "--------------------"
 count = 3
 begin
-    print "Give me a number: "
+    print ":> Give me a number: "
     number1 = gets.chomp
-    raise NonNumericArgumentError, "\n'#{number1.upcase}' must be a number " if !is_number?(number1) 
+    raise NonNumericArgumentError, "\n:> #{colorize("'#{number1.upcase}'", $font_colors[:yellow], $bg_colors[:red])} is not a number!" if !is_number?(number1) 
     number1 = number1.to_i
 
-    print "Give me another number: "
+    print ":> Give me another number: "
     number2 = gets.chomp
-    raise NonNumericArgumentError, "\n'#{number2.upcase}' must be a number " if !is_number?(number2)
+    raise NonNumericArgumentError, "\n:> #{colorize("'#{number2.upcase}'", $font_colors[:yellow], $bg_colors[:red])} is not a number!" if !is_number?(number2)
     number2 = number2.to_i
 
     answer = divide(number1,number2)
-    print "#{number1}  ÷  #{number2} = "
-    print "#{answer || "error"}"
+    print ":> #{number1}  ÷  #{number2} = "
+    print ":> #{answer || "error"}"
     puts
 rescue NonNumericArgumentError => e
     system "clear"
     puts "#{e.message}"
     if counter_is_zero?(count)
-        puts "Your attempts are up goodbye!"
+        puts ":> Your attempts are up goodbye!"
         return
     end
     print_message(count)
@@ -59,9 +60,9 @@ rescue NonNumericArgumentError => e
     retry
 rescue => exception
     system "clear"
-    puts "- A #{exception.message} error has occurred.\n- Please enter a numerical number to proceed."       
+    puts "- A #{exception.message} error has occurred.\n- Please enter a number to proceed."       
     if counter_is_zero?(count)
-        puts "Your attempts are up goodbye!"
+        puts ":> Your attempts are up goodbye!"
         return
     end
     print_message(count)
